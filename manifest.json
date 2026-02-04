@@ -1,0 +1,30 @@
+{
+  "name": "منصة العيسائي الرقمية للقانون",
+  "short_name": "منصة العيسائي",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0d0b",
+  "theme_color": "#d4af37",
+  "orientation": "portrait",
+  "description": "منصة قانونية رقمية متكاملة، تعمل بدون إنترنت، لعرض وإدارة المحتوى القانوني.",
+  "icons": [
+    {
+      "src": "./icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/maskable-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
