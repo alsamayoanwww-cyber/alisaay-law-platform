@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#d4af37" />
+  <title>منصة العيسائي الرقمية للقانون</title> 
+  <link rel="manifest" href="./manifest.json" /> 
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="icon" href="./icons/icon-192x192.png" />
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">⚖️</div>
+        <div>
+          <div class="title">منصة العيسائي الرقمية للقانون</div> 
+          <div class="small">مرجع قانوني رقمي</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="btn-install" class="icon-btn install-btn">📲 تثبيت</button>
+        <button id="btn-admin" class="icon-btn">🔐 إدارة</button>
+        </div>
+    </div>
+
+    <div class="icon-strip">
+      <div id="top-icons" class="strip-inner"></div>
+    </div>
+
+    <div class="search-row">
+      <input type="text" id="search" class="search-input" placeholder="ابحث في المواد..." />
+      <button id="btn-search" class="search-icon">🔍</button>
+    </div>
+
+    <div class="layout">
+      <div class="left-panel">
+        <div class="panel-title">📚 الفهرس</div>
+        <div id="public-index" class="index-window"></div>
+      </div>
+
+      <div class="right-panel">
+        <div class="viewer-head">
+          <div class="row">
+            <div id="item-title" class="viewer-title">...</div>
+            <div id="item-subtitle" class="small"></div>
+          </div>
+          <div class="row">
+            <button id="btn-copy-selected" class="btn neutral">📋 نسخ</button>
+            <button id="btn-print-selected" class="btn neutral">🖨️ طباعة</button>
+            <button id="btn-share-selected" class="btn neutral">📤 مشاركة</button>
+          </div>
+        </div>
+        <div id="viewer-content" class="viewer"></div>
+
+        <div id="attachments-section" style="margin-top:15px;display:none">
+          <div class="panel-title">📎 المرفقات</div>
+          <div id="attachments-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="message-container"></div>
+
+    <div class="footer">جميع الحقوق محفوظة © منصة العيسائي الرقمية للقانون</div> 
+  </div>
+
+  <div id="password-modal" class="modal">
+    <div class="modal-content">
+      <div id="password-info" class="small"></div>
+      <input type="password" id="admin-password-input" />
+      <button id="submit-password" class="btn primary">دخول</button>
+      <button id="close-password-modal" class="btn neutral">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="admin-modal" class="modal">
+    <div class="modal-content">
+      <div class="panel-title">🔐 لوحة الإدارة</div>
+
+      <button id="btn-show-index-manager" class="btn primary" style="width: 100%; margin-bottom: 20px; padding: 15px; font-weight: bold;">
+        🧩 الدخول لوضع تحرير الفهرس
+      </button>
+      
+      <div id="admin-index-list" class="admin-index-list-container"></div>
+      
+      <div class="panel-title" style="margin-top: 20px;">
+        📬 إدارة المراسلات الواردة
+      </div>
+      <button id="btn-show-uploads" class="btn primary">عرض المراسلات</button>
+      <button id="btn-delete-uploads" class="btn danger">🗑️ حذف جميع المراسلات</button>
+      
+      <div class="divider"></div>
+      
+      <div class="panel-title" style="margin-top: 20px;">
+        📦 النسخ الاحتياطي الكامل (البيانات والمرفقات)
+      </div>
+      <button id="btn-export-full-data" class="btn primary">📤 تصدير كامل البيانات</button>
+      <input type="file" id="input-import-full-data" style="display:none;" accept=".json">
+      <button id="btn-import-full-data" class="btn danger">📥 استيراد كامل البيانات</button>
+
+      <div class="divider"></div>
+      
+      <div class="panel-title" style="margin-top: 20px;">
+        النسخ الاحتياطي (الفهرس فقط)
+      </div>
+      <button id="admin-export-meta" class="btn neutral">📤 تصدير الفهرس (Meta)</button>
+      <button id="admin-import-meta" class="btn neutral">📥 استيراد الفهرس (Meta)</button>
+      
+      <div class="divider"></div>
+      
+      <div class="panel-title" style="margin-top: 20px;">
+        إعدادات الأمان
+      </div>
+      <button id="btn-set-password" class="btn neutral">🔑 تعيين/تغيير كلمة المرور</button>
+      <button id="btn-reset-password" class="btn danger">🗑️ مسح كلمة المرور</button>
+      
+      <div class="divider"></div>
+
+      <button id="admin-close" class="btn neutral">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="editor-modal" class="modal">
+    <div class="modal-content">
+      <div id="editor-title" class="panel-title"></div>
+      <input type="text" id="editor-name" placeholder="الاسم/العنوان" />
+      <input type="text" id="editor-icon" placeholder="الأيقونة (مثل: ⚖️)" />
+      <textarea id="editor-content" rows="10" placeholder="محتوى المادة (يدعم HTML)"></textarea>
+      
+      <div class="file-actions">
+        <input type="file" id="input-attach-files" multiple style="display:none" />
+        <button id="btn-attach-files" class="btn neutral">📎 إرفاق ملفات</button>
+        <button id="btn-view-attachments" class="btn neutral">عرض المرفقات (0)</button>
+      </div>
+
+      <button id="btn-delete-item" class="btn danger">🗑️ حذف المادة/التصنيف</button>
+      <div class="divider"></div>
+
+      <button id="editor-save" class="btn primary">حفظ</button>
+      <button id="editor-close" class="btn neutral">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="view-attachments-modal" class="modal">
+    <div class="modal-content">
+      <div class="panel-title">📎 المرفقات الحالية</div>
+      <div id="attachments-list-edit"></div>
+      <button id="view-attachments-close" class="btn neutral">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="uploads-modal" class="modal">
+    <div class="modal-content">
+      <div class="panel-title">📬 المرسلات الواردة</div>
+      <div id="uploads-list"></div>
+      <button id="uploads-close" class="btn neutral">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="content-manager-area" style="display:none">
+    <div class="panel-title">🧩 لوحة تحرير الفهرس</div>
+    <div id="editable-index"></div>
+  </div>
+
+  <div class="contact-form-card">
+    <div class="panel-title">📨 مراسلة الإدارة</div>
+    <input type="text" id="visitor-name" placeholder="اسمك (اختياري)" />
+    <textarea id="visitor-message" rows="4" placeholder="رسالتك..."></textarea>
+    <input type="file" id="visitor-files" multiple />
+    <button id="submit-upload" class="btn primary">إرسال الرسالة محلياً</button>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
